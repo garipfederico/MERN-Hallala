@@ -20,6 +20,7 @@ function App() {
       <Route path="/create" exact component={CreateProducto} />
       <Route path="/empresa" exact component={CreateEmpresa} />
       <Route path="/empresas" exact component={EmpresasList} />
+      <Route path="/actualizarEmpresas/:id" exact component={CreateEmpresa} />
     </Router>
   );
 }

@@ -7,10 +7,11 @@ empresasCtrl.getEmpresas = async (req, res) => {
 }
 
 empresasCtrl.crearEmpresa = async (req, res) => {
-    const { nombre, descripcion } = req.body;
+    const { nombre, descripcion, mision } = req.body;
     const newEmpresa = new Empresa({
         nombre: nombre,
-        descripcion: descripcion
+        descripcion: descripcion,
+        mision: mision
     });
     await newEmpresa.save();
     res.send('Empresa creada')
@@ -22,10 +23,11 @@ empresasCtrl.getEmpresa = async (req, res) => {
 }; 
 
 empresasCtrl.actualizarEmpresa = async (req, res) => {
-    const { nombre, descripcion } = req.body;
+    const { nombre, descripcion, mision } = req.body;
     const empresa = await Empresa.findByIdAndUpdate(req.params.id, {
         nombre: nombre,
-        descripcion: descripcion
+        descripcion: descripcion,
+        mision: mision
     });
     res.json({ message: 'Empresa actualizada' })
 };

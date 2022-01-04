@@ -22,19 +22,25 @@ export class EmpresasList extends Component {
         this.getEmpresas();
     }
 
+    
+
     render() {
         return (
             <div className='row d-flex'>
                 {this.state.empresas.map(empresa => (
                     <div className="card col-3 m-2 p-3">
                         <div className="card-body">
-                            <h5 className="card-title">{empresa.nombre}</h5>
-                            <p className="card-text">{empresa.descripcion}</p>
+                            <h5 className="card-title col-12 display-6 text-white bg-secondary rounded text-center">{empresa.nombre}</h5>
+                            <p className="card-text fw-bold">{empresa.descripcion}</p>
+                            <p className="card-text fst-italic">{empresa.mision}</p>
                         </div>
-                        <button className='btn btn-primary' onClick={() => this.deleteEmpresa(empresa._id)}>Eliminar</button>
+                        <div className='row justify-content-evenly'>
+                            <Link className="btn btn-success btn-sm col-4" to={"/actualizarEmpresas/" + empresa._id}>Modificar</Link>
+                            <button className='btn btn-danger btn-sm col-4' onClick={() => this.deleteEmpresa(empresa._id)}>Eliminar</button>
+                        </div>
                     </div>)
-                   
-               )}
+
+                )}
             </div>
         )
     }
