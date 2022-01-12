@@ -8,7 +8,7 @@ import CreateEmpresa from './components/CreateEmpresa';
 import NavigationBar from './components/NavigationBar';
 import ProductosList from './components/ProductosList';
 import EmpresasList from './components/EmpresasList'
-
+import Prueba from './components/prueba'
 
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
       <Route path="/empresa" exact component={CreateEmpresa} />
       <Route path="/empresas" exact component={EmpresasList} />
       <Route path="/actualizarEmpresas/:id" exact component={CreateEmpresa} />
+      <Route path="/prueba" exact component={Prueba} />
     </Router>
   );
 }
