@@ -7,7 +7,12 @@ const empresaSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    }
+    },
+    miembros: [{
+        nombre: String,
+        apellido: String,
+        cargo: String
+    }],
 },{
     timestamps: true
 });

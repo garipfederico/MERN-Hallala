@@ -2,8 +2,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Tab } from '../../node_modules/bootstrap/js/dist/tab'
-// import bootstrap from 'bootstrap'
-
 export default class createEmpresa extends Component {
 
     state = {
@@ -25,7 +23,8 @@ export default class createEmpresa extends Component {
                 nombre: res.data.nombre,
                 descripcion: res.data.descripcion,
                 mision: res.data.mision,
-                _id: this.props.match.params.id
+                _id: this.props.match.params.id,
+                miembros: res.data.miembros
 
             })
         }
@@ -36,7 +35,8 @@ export default class createEmpresa extends Component {
         const newEmpresa = {
             nombre: this.state.nombre,
             descripcion: this.state.descripcion,
-            mision: this.state.mision
+            mision: this.state.mision,
+            miembros: this.state.miembros
         };
         if (this.state.editing) {
             await axios.put('http://localhost:4000/api/empresas/' + this.state._id, newEmpresa)
@@ -72,11 +72,9 @@ export default class createEmpresa extends Component {
         })
     }
 
-
-
     // Ver bien como importar bootstrap tab para implementar metodo show
     onClickSiguiente = e => {
-        
+
         //     e.Tab.shown()
         //     var tab = new bootstrap.Tab()
         // Las tabs
@@ -210,20 +208,23 @@ export default class createEmpresa extends Component {
                                         >
                                         </input>
                                     </div>
-                                    <div className="col m-2 justify-content-center ">
-                                        <button type="button" className="btn btn-success" onClick={this.onClickAgregar}>Agregar</button>
+                                    <div className="col m-2 text-center">
+                                        <button type="button" className="btn btn-success " onClick={this.onClickAgregar}>
+                                            {editando ? 'Guardar miembro' : 'Agregar'}</button>
                                     </div>
                                 </div>
                                 <div id="miembros" className='row m-3 justify-content-center'>
                                     <ul class="list-group col-md-6 list-group-flush">
                                         {this.state.miembros.map(miembro => (
-                                            <li key={miembro} className="list-group-item  list-group-item-action ">{miembro.nombre} {miembro.apellido} <em>({miembro.cargo})</em></li>
+                                            <li key={miembro} className="list-group-item  list-group-item-action ">
+                                                {miembro.nombre} {miembro.apellido} <em>({miembro.cargo})</em>
+                                            </li>
                                         ))}
                                     </ul>
                                 </div>
                                 <div className="row justify-content-center">
                                     <button type="submit" className="btn btn-primary col-md-4">
-                                        {editando ? 'Guardar' : 'Inscribir'}
+                                        {editando ? 'Guardar empresa' : 'Inscribir'}
                                     </button>
                                 </div>
                             </div>

@@ -7,11 +7,12 @@ empresasCtrl.getEmpresas = async (req, res) => {
 }
 
 empresasCtrl.crearEmpresa = async (req, res) => {
-    const { nombre, descripcion, mision } = req.body;
+    const { nombre, descripcion, mision, miembros } = req.body;
     const newEmpresa = new Empresa({
         nombre: nombre,
         descripcion: descripcion,
-        mision: mision
+        mision: mision,
+        miembros: miembros
     });
     await newEmpresa.save();
     res.send('Empresa creada')
