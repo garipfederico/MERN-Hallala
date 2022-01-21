@@ -1,5 +1,6 @@
 const empresasCtrl = {}
 const Empresa = require('../models/empresa')
+const Miembro = require('../models/miembro')
 
 empresasCtrl.getEmpresas = async (req, res) => {
     const empresas = await Empresa.find();
@@ -24,11 +25,13 @@ empresasCtrl.getEmpresa = async (req, res) => {
 }; 
 
 empresasCtrl.actualizarEmpresa = async (req, res) => {
-    const { nombre, descripcion, mision } = req.body;
+    const { nombre, descripcion, mision, miembros } = req.body;
     const empresa = await Empresa.findByIdAndUpdate(req.params.id, {
         nombre: nombre,
         descripcion: descripcion,
-        mision: mision
+        mision: mision,
+        miembros: miembros
+    
     });
     res.json({ message: 'Empresa actualizada' })
 };

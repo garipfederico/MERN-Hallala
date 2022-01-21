@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Tab } from '../../node_modules/bootstrap/js/dist/tab'
+// import { Tab } from '../../node_modules/bootstrap/js/dist/tab'
 export default class createEmpresa extends Component {
 
     state = {
@@ -9,7 +9,8 @@ export default class createEmpresa extends Component {
         descripcion: '',
         mision: '',
         editing: false,
-        _id: '',
+        editingMiembro: false,
+        idMiembroActual: '',
         nombreMiembro: '',
         apellidoMiembro: '',
         cargoMiembro: '',
@@ -52,33 +53,64 @@ export default class createEmpresa extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        console.log(this.state.nombre)
+
     }
 
+    // Click en el boton agregar o guardar miembro
     onClickAgregar = () => {
-        const miembro = {
-            nombre: this.state.nombreMiembro,
-            apellido: this.state.apellidoMiembro,
-            cargo: this.state.cargoMiembro,
-        }
-        this.setState(state => {
-            const miembros = state.miembros.concat(miembro);
-            return {
-                miembros,
-                nombreMiembro: '',
-                apellidoMiembro: '',
-                cargoMiembro: ''
+        if (this.state.editingMiembro) {
+            const miembros = this.state.miembros;
+            const id = this.state.idMiembroActual
+            // const index = miembros.findIndex(function(item){return item._id === id})
+
+            // const index = miembros.findIndex(checkId)
+            // function checkId(item) {
+            //     return item.id === id;
+            // }
+
+            const index = id;
+            const miembro = {
+                nombre: this.state.nombreMiembro,
+                apellido: this.state.apellidoMiembro,
+                cargo: this.state.cargoMiembro,
+                id: id, //Que para el caso es el index
             }
-        })
+
+            let newMiembros = [...miembros]
+            newMiembros[index] = miembro
+            this.setState(state => {
+                return {
+                    miembros: newMiembros,
+                    nombreMiembro: '',
+                    apellidoMiembro: '',
+                    cargoMiembro: '',
+                    idMiembroActual: '',
+                    editingMiembro: false
+                }
+            })
+        } else {
+            this.setState(state => {
+                const id = this.state.miembros.length
+                console.log(id)
+                const miembro = {
+                    nombre: this.state.nombreMiembro,
+                    apellido: this.state.apellidoMiembro,
+                    cargo: this.state.cargoMiembro,
+                    id: id,
+                }
+                const miembros = state.miembros.concat(miembro);
+                return {
+                    miembros,
+                    nombreMiembro: '',
+                    apellidoMiembro: '',
+                    cargoMiembro: '',
+                }
+            })
+            document.getElementById("nombreMiembro").focus();
+        }
     }
 
-    // Ver bien como importar bootstrap tab para implementar metodo show
     onClickSiguiente = e => {
-
-        //     e.Tab.shown()
-        //     var tab = new bootstrap.Tab()
-        // Las tabs
-
 
         const tabEmpresa = document.getElementById("inicio-tab")
         tabEmpresa.classList.remove("active")
@@ -89,22 +121,64 @@ export default class createEmpresa extends Component {
         contEmpresa.classList.remove("active", "show")
         const contMiembros = document.getElementById("contenido-miembro")
         contMiembros.classList.add("active", "show")
-
-        // ------------prueba 2 ----------------- esta es de la documentacion
-
-
-        // ------------prueba 3 -----------------
-
-        // var myCollapseEl = document.getElementById('myCollapse')
-
-        // myCollapseEl.addEventListener('shown.bs.collapse', function (event) {
-        // Action to execute once the collapsible area is expanded
-        // })
     }
 
+    onMiembroclick(id) {
+        const miembro = this.state.miembros.find(miembro => miembro.id === id);
+        const nombre = miembro.nombre;
+        const apellido = miembro.apellido;
+        const cargo = miembro.cargo;
+        // console.log(nombre)
+        this.setState(state => {
+            return {
+                nombreMiembro: nombre,
+                apellidoMiembro: apellido,
+                cargoMiembro: cargo,
+                idMiembroActual: id,
+                editingMiembro: true
+            }
+        }
+        )
+        document.getElementById('botonCancelar').classList.remove('disabled')
+    }
+
+    onClickBorrar = () => {
+        const index = this.state.idMiembroActual
+        const miembros = this.state.miembros
+        const newMiembros = miembros.filter(checkId)
+        function checkId(miembro){
+            console.log(miembro.id + ' ' + index)
+            return miembro.id !== index
+        }
+        this.setState(state => {
+            return {
+                miembros: newMiembros,
+                nombreMiembro: '',
+                apellidoMiembro: '',
+                cargoMiembro: '',
+                idMiembroActual: '',
+                editingMiembro: false
+            }
+        })
+    }
+
+    onClickCancelar = () => {
+        this.setState(state => {
+            return {
+                nombreMiembro: '',
+                apellidoMiembro: '',
+                cargoMiembro: '',
+                idMiembroActual: '',
+                editingMiembro: false
+            }
+    }
+    )
+document.getElementById('botonCancelar').classList.add('disabled')
+}
 
     render() {
         const editando = this.state.editing;
+        const editandoMiembro = this.state.editingMiembro;
         return (
             <div>
                 {/* TITULO */}
@@ -209,14 +283,23 @@ export default class createEmpresa extends Component {
                                         </input>
                                     </div>
                                     <div className="col m-2 text-center">
-                                        <button type="button" className="btn btn-success " onClick={this.onClickAgregar}>
+                                        <button type="button" className="btn btn-success" onClick={this.onClickAgregar}>
                                             {editando ? 'Guardar miembro' : 'Agregar'}</button>
+                                    </div>
+                                    <div className="col m-2 text-center">
+                                        <button type="button" className="btn btn-danger" onClick={this.onClickBorrar}>
+                                            Borrar miembro</button>
+                                    </div>
+                                    <div className="col m-2 text-center">
+                                        <button type="button" id="botonCancelar" className="btn btn-danger" onClick={this.onClickCancelar}>
+                                            Cancelar</button>
                                     </div>
                                 </div>
                                 <div id="miembros" className='row m-3 justify-content-center'>
                                     <ul class="list-group col-md-6 list-group-flush">
                                         {this.state.miembros.map(miembro => (
-                                            <li key={miembro} className="list-group-item  list-group-item-action ">
+                                            <li key={miembro.id} className="list-group-item  list-group-item-action "
+                                                onClick={() => this.onMiembroclick(miembro.id)}>
                                                 {miembro.nombre} {miembro.apellido} <em>({miembro.cargo})</em>
                                             </li>
                                         ))}
