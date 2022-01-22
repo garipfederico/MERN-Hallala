@@ -53,6 +53,8 @@ export default class createEmpresa extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+        document.getElementById('botonCancelar').classList.remove('disabled')
+        document.getElementById('botonAgregar').classList.remove('disabled')
 
     }
 
@@ -61,13 +63,6 @@ export default class createEmpresa extends Component {
         if (this.state.editingMiembro) {
             const miembros = this.state.miembros;
             const id = this.state.idMiembroActual
-            // const index = miembros.findIndex(function(item){return item._id === id})
-
-            // const index = miembros.findIndex(checkId)
-            // function checkId(item) {
-            //     return item.id === id;
-            // }
-
             const index = id;
             const miembro = {
                 nombre: this.state.nombreMiembro,
@@ -107,6 +102,8 @@ export default class createEmpresa extends Component {
                 }
             })
             document.getElementById("nombreMiembro").focus();
+            document.getElementById('botonCancelar').classList.add('disabled')
+            document.getElementById('botonAgregar').classList.add('disabled')
         }
     }
 
@@ -146,7 +143,7 @@ export default class createEmpresa extends Component {
         const index = this.state.idMiembroActual
         const miembros = this.state.miembros
         const newMiembros = miembros.filter(checkId)
-        function checkId(miembro){
+        function checkId(miembro) {
             console.log(miembro.id + ' ' + index)
             return miembro.id !== index
         }
@@ -160,6 +157,7 @@ export default class createEmpresa extends Component {
                 editingMiembro: false
             }
         })
+        
     }
 
     onClickCancelar = () => {
@@ -171,10 +169,11 @@ export default class createEmpresa extends Component {
                 idMiembroActual: '',
                 editingMiembro: false
             }
+        }
+        )
+        document.getElementById('botonCancelar').classList.add('disabled')
+        document.getElementById('botonAgregar').classList.add('disabled')
     }
-    )
-document.getElementById('botonCancelar').classList.add('disabled')
-}
 
     render() {
         const editando = this.state.editing;
@@ -199,41 +198,43 @@ document.getElementById('botonCancelar').classList.add('disabled')
                     {/* CONTENIDO */}
                     <div className="tab-content" id="contenido-nav">
                         {/* EMPRESA */}
-                        <div className="tab-pane fade " role="tab" id="contenido-empresa" aria-labelledby="inicio-tab">
+                        <div className="tab-pane fade show active" role="tab" id="contenido-empresa" aria-labelledby="inicio-tab">
                             <div className="container">
-                                <label className="row justify-content-start mt-4">
-                                    <h6>Datos de la Empresa</h6>
-                                </label>
+                                <div className="bg-light p-5">
+                                    <label className="row justify-content-start mt-4">
+                                        <h6 className='lead'>Datos de la Empresa</h6>
+                                    </label>
 
-                                <div id="1">
-                                    <div className="row justify-content-center p-2">
-                                        <input className="form-control "
-                                            type="text"
-                                            placeholder="Nombre:"
-                                            name="nombre"
-                                            onChange={this.onInputChange}
-                                            value={this.state.nombre} />
-                                    </div>
-                                    <div class="form-group row justify-content-center p-2">
-                                        <textarea class="form-control"
-                                            id="exampleFormControlTextarea1"
-                                            rows="5"
-                                            placeholder="Descripcion:"
-                                            name="descripcion"
-                                            onChange={this.onInputChange}
-                                            value={this.state.descripcion}>
-                                        </textarea>
-                                    </div>
-                                    <div class="form-group row justify-content-center p-2">
-                                        <textarea class="form-control"
-                                            id="exampleFormControlTextarea1"
-                                            rows="5"
-                                            placeholder="Mision:"
-                                            name="mision"
-                                            onChange={this.onInputChange}
-                                            value={this.state.mision}
-                                        >
-                                        </textarea>
+                                    <div id="1">
+                                        <div className="row justify-content-center p-2">
+                                            <input className="form-control "
+                                                type="text"
+                                                placeholder="Nombre:"
+                                                name="nombre"
+                                                onChange={this.onInputChange}
+                                                value={this.state.nombre} />
+                                        </div>
+                                        <div class="form-group row justify-content-center p-2">
+                                            <textarea class="form-control"
+                                                id="exampleFormControlTextarea1"
+                                                rows="5"
+                                                placeholder="Descripcion:"
+                                                name="descripcion"
+                                                onChange={this.onInputChange}
+                                                value={this.state.descripcion}>
+                                            </textarea>
+                                        </div>
+                                        <div class="form-group row justify-content-center p-2">
+                                            <textarea class="form-control"
+                                                id="exampleFormControlTextarea1"
+                                                rows="5"
+                                                placeholder="Mision:"
+                                                name="mision"
+                                                onChange={this.onInputChange}
+                                                value={this.state.mision}
+                                            >
+                                            </textarea>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row justify-content-center">
@@ -246,68 +247,76 @@ document.getElementById('botonCancelar').classList.add('disabled')
                             </div>
                         </div>
                         {/* MIEMBRO */}
-                        <div className="tab-pane fade show active" role="tab" id="contenido-miembro" aria-labelledby="servicio-tab">
+                        <div className="tab-pane fade" role="tab" id="contenido-miembro" aria-labelledby="servicio-tab">
                             <div className="container">
-                                <label className="row justify-content-start mt-4">
-                                    <h6>Datos de los miembros</h6>
-                                </label>
-                                <div class="row row-cols-1 row-cols-md-5  form-group justify-content-center p-2">
-                                    <div className="col col-md-4 m-2">
-                                        <input class="form-control"
-                                            id="nombreMiembro"
-                                            placeholder="Nombre"
-                                            name="nombreMiembro"
-                                            onChange={this.onInputChange}
-                                            value={this.state.nombreMiembro}
-                                        >
-                                        </input>
+                                <div className="bg-light">
+                                    <label className="row justify-content-start mt-4">
+                                        <h6 className='lead'>Carga de miembros</h6>
+                                    </label>
+                                    <div class="row row-cols-1 row-cols-md-5  form-group justify-content-center p-2">
+                                        <div className="col col-md-4 m-2">
+                                            <input class="form-control"
+                                                id="nombreMiembro"
+                                                placeholder="Nombre"
+                                                name="nombreMiembro"
+                                                onChange={this.onInputChange}
+                                                value={this.state.nombreMiembro}
+                                            >
+                                            </input>
+                                        </div>
+                                        <div className="col m-2">
+                                            <input class="form-control"
+                                                id="apellidoMiembro"
+                                                placeholder="Apellido"
+                                                name="apellidoMiembro"
+                                                onChange={this.onInputChange}
+                                                value={this.state.apellidoMiembro}
+                                            >
+                                            </input>
+                                        </div>
+                                        <div className="col m-2">
+                                            <input class="form-control"
+                                                id="cargoMiembro"
+                                                placeholder="Cargo"
+                                                name="cargoMiembro"
+                                                onChange={this.onInputChange}
+                                                value={this.state.cargoMiembro}
+                                            >
+                                            </input>
+                                        </div>
                                     </div>
-                                    <div className="col m-2">
-                                        <input class="form-control"
-                                            id="apellidoMiembro"
-                                            placeholder="Apellido"
-                                            name="apellidoMiembro"
-                                            onChange={this.onInputChange}
-                                            value={this.state.apellidoMiembro}
-                                        >
-                                        </input>
+                                    <div className="row justify-content-center justify-content-md-end px-md-4">
+                                        <div className="col-2 my-2 mx-3 text-center">
+                                            <button type="button" id="botonAgregar" className="btn btn-success disabled" onClick={this.onClickAgregar}>
+                                                {editandoMiembro ? 'Guardar miembro' : 'Agregar'}</button>
+                                        </div>
+                                        {editandoMiembro
+                                            ?
+                                            <div className="col-2 my-2 mx-3 text-center">
+                                                <button type="button" className="btn btn-danger" onClick={this.onClickBorrar}>
+                                                    Borrar miembro</button>
+                                            </div>
+                                            : ""}
+                                        <div className="col-2 my-2 mx-3 text-center">
+                                            <button type="button" id="botonCancelar" className="btn btn-danger disabled" onClick={this.onClickCancelar}>
+                                                Cancelar</button>
+                                        </div>
                                     </div>
-                                    <div className="col m-2">
-                                        <input class="form-control"
-                                            id="cargoMiembro"
-                                            placeholder="Cargo"
-                                            name="cargoMiembro"
-                                            onChange={this.onInputChange}
-                                            value={this.state.cargoMiembro}
-                                        >
-                                        </input>
-                                    </div>
-                                    <div className="col m-2 text-center">
-                                        <button type="button" className="btn btn-success" onClick={this.onClickAgregar}>
-                                            {editando ? 'Guardar miembro' : 'Agregar'}</button>
-                                    </div>
-                                    <div className="col m-2 text-center">
-                                        <button type="button" className="btn btn-danger" onClick={this.onClickBorrar}>
-                                            Borrar miembro</button>
-                                    </div>
-                                    <div className="col m-2 text-center">
-                                        <button type="button" id="botonCancelar" className="btn btn-danger" onClick={this.onClickCancelar}>
-                                            Cancelar</button>
+<h6 className="lead ">Miembros:</h6>
+                                    <div id="miembros" className='row m-3 justify-content-center'>
+                                        <ul class="list-group col-md-6 list-group-flush mb-3">
+                                            {this.state.miembros.map(miembro => (
+                                                <li key={miembro.id} className="list-group-item  list-group-item-action "
+                                                    onClick={() => this.onMiembroclick(miembro.id)}>
+                                                    {miembro.nombre} {miembro.apellido} <em>({miembro.cargo})</em>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                 </div>
-                                <div id="miembros" className='row m-3 justify-content-center'>
-                                    <ul class="list-group col-md-6 list-group-flush">
-                                        {this.state.miembros.map(miembro => (
-                                            <li key={miembro.id} className="list-group-item  list-group-item-action "
-                                                onClick={() => this.onMiembroclick(miembro.id)}>
-                                                {miembro.nombre} {miembro.apellido} <em>({miembro.cargo})</em>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div className="row justify-content-center">
+                                <div className="row justify-content-center mt-5">
                                     <button type="submit" className="btn btn-primary col-md-4">
-                                        {editando ? 'Guardar empresa' : 'Inscribir'}
+                                        {editando ? 'Finalizar' : 'Inscribir'}
                                     </button>
                                 </div>
                             </div>
