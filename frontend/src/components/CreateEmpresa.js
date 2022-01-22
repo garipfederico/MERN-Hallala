@@ -157,7 +157,7 @@ export default class createEmpresa extends Component {
                 editingMiembro: false
             }
         })
-        
+
     }
 
     onClickCancelar = () => {
@@ -200,7 +200,7 @@ export default class createEmpresa extends Component {
                         {/* EMPRESA */}
                         <div className="tab-pane fade show active" role="tab" id="contenido-empresa" aria-labelledby="inicio-tab">
                             <div className="container">
-                                <div className="bg-light p-5">
+                                <div className="bg-light px-5">
                                     <label className="row justify-content-start mt-4">
                                         <h6 className='lead'>Datos de la Empresa</h6>
                                     </label>
@@ -217,7 +217,7 @@ export default class createEmpresa extends Component {
                                         <div class="form-group row justify-content-center p-2">
                                             <textarea class="form-control"
                                                 id="exampleFormControlTextarea1"
-                                                rows="5"
+                                                rows="4"
                                                 placeholder="Descripcion:"
                                                 name="descripcion"
                                                 onChange={this.onInputChange}
@@ -227,7 +227,7 @@ export default class createEmpresa extends Component {
                                         <div class="form-group row justify-content-center p-2">
                                             <textarea class="form-control"
                                                 id="exampleFormControlTextarea1"
-                                                rows="5"
+                                                rows="4"
                                                 placeholder="Mision:"
                                                 name="mision"
                                                 onChange={this.onInputChange}
@@ -238,7 +238,7 @@ export default class createEmpresa extends Component {
                                     </div>
                                 </div>
                                 <div className="row justify-content-center">
-                                    <button type="button" className="btn btn-primary btn col-md-4" onClick={() => this.onClickSiguiente()}>
+                                    <button type="button" className="btn btn-primary col-8 col-md-4 mt-2" onClick={() => this.onClickSiguiente()}>
                                         {/* <button id="btn-sig" type="button" className="btn btn-primary btn col-md-4"> */}
                                         Siguiente
                                     </button>
@@ -302,8 +302,8 @@ export default class createEmpresa extends Component {
                                                 Cancelar</button>
                                         </div>
                                     </div>
-<h6 className="lead ">Miembros:</h6>
-                                    <div id="miembros" className='row m-3 justify-content-center'>
+                                    <h6 className="lead ">Miembros:</h6>
+                                    <div id="miembros" className='row mx-3 justify-content-center'>
                                         <ul class="list-group col-md-6 list-group-flush mb-3">
                                             {this.state.miembros.map(miembro => (
                                                 <li key={miembro.id} className="list-group-item  list-group-item-action "
@@ -314,8 +314,8 @@ export default class createEmpresa extends Component {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className="row justify-content-center mt-5">
-                                    <button type="submit" className="btn btn-primary col-md-4">
+                                <div className="row justify-content-center">
+                                    <button type="submit" className="btn btn-primary col-8 col-md-4 mt-2">
                                         {editando ? 'Finalizar' : 'Inscribir'}
                                     </button>
                                 </div>
